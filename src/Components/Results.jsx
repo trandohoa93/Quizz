@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { closeResult } from '../features/question/questionSlice'
+import { closeResult, fetchQuiz } from '../features/question/questionSlice'
+
 const Results = () => {
     const correct = useSelector((state) => state.quiz.correct)
     const listQuiz = useSelector((state) => state.quiz.listQuiz.results)
@@ -8,7 +9,12 @@ const Results = () => {
 
     const dispatch = useDispatch()
 
-return (
+    const handlePlayagain = () => {
+        dispatch(fetchQuiz())
+        dispatch(closeResult())
+    }
+
+    return (
         <div className="absolute top-0 left-0 h-screen w-full flex items-center bg-[rgba(0,0,0,.5)]">
 
             <div className=" text-center bg-white p-8 mx-auto rounded-lg max-w-[600px] w-11/12">
@@ -24,7 +30,7 @@ return (
             {(score > 40) && <p className="py-2 font-medium">Congrats!!!</p>}
             <button
                 className="bg-red-600 py-2 px-7 rounded-full text-white mt-2 hover:bg-red-500"
-                onClick={() => dispatch(closeResult())}
+                onClick={handlePlayagain}
             >
                 Play Again
             </button>
